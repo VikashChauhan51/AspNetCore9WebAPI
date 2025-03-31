@@ -8,7 +8,13 @@ public static class HostBuildingExtensions
 {
     public static WebApplication ConfigureServices(this WebApplicationBuilder builder)
     {
-       // builder.Services.AddSerilog();
+        Log.Logger = new LoggerConfiguration()
+      .WriteTo.Console()
+      .Enrich.FromLogContext()
+      .CreateLogger();
+
+        builder.Host.UseSerilog(Log.Logger);
+
         builder.ConfigureOpenTelemetry();
         builder.Services.SwaggerDocument(o =>
         {
@@ -16,7 +22,7 @@ public static class HostBuildingExtensions
             o.DocumentSettings = s =>
             {
                 s.DocumentName = "Release 1";
-                s.Title = "My API";
+                s.Title = "Course Library Api";
                 s.Version = "v1";
             };
         });

@@ -1,9 +1,8 @@
 ﻿using CourseLibrary.Domain.Entities;
 
-namespace CourseLibrary.Authentication
+namespace CourseLibrary.Authentication;
+
+public interface IJwtTokenService
 {
-    public interface IJwtTokenService
-    {
-        string? GetToken(User user);
-    }
+    string? GetToken(User user);
 }
