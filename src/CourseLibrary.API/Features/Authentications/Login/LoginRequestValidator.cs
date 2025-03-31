@@ -1,8 +1,8 @@
-﻿namespace CourseLibrary.API.Validators;
+﻿namespace CourseLibrary.API.Features.Authentications.Login;
 
-public class AuthenticationValidator : AbstractValidator<AuthenticationModel>
+public class LoginRequestValidator : AbstractValidator<LoginRequest>
 {
-    public AuthenticationValidator()
+    public LoginRequestValidator()
     {
         RuleFor(author => author.Email).NotNull().NotEmpty().Length(8, 50).EmailAddress();
         RuleFor(author => author.Password).NotNull().NotEmpty().Length(8, 50);

@@ -1,4 +1,6 @@
-﻿using Serilog;
+﻿using FastEndpoints;
+using FastEndpoints.Swagger;
+using Serilog;
 
 namespace CourseLibrary.API.Extensions;
 
@@ -6,12 +8,24 @@ public static class HostBuildingExtensions
 {
     public static WebApplication ConfigureServices(this WebApplicationBuilder builder)
     {
-        builder.Services.AddSerilog();
+       // builder.Services.AddSerilog();
         builder.ConfigureOpenTelemetry();
+        builder.Services.SwaggerDocument(o =>
+        {
+            o.MaxEndpointVersion = 1;
+            o.DocumentSettings = s =>
+            {
+                s.DocumentName = "Release 1";
+                s.Title = "My API";
+                s.Version = "v1";
+            };
+        });
+
 
         builder.Services
-    .CongigureServices(builder.Configuration)
-    .CongigureRepositories(builder.Configuration);
+            .CongigureServices(builder.Configuration)
+            .CongigureRepositories(builder.Configuration);
+
         return builder.Build();
     }
 
@@ -20,15 +34,16 @@ public static class HostBuildingExtensions
         if (app.Environment.IsDevelopment())
         {
         }
-        app.UseHttpsRedirection();
 
-        app.UseResponseCaching();
-        app.UseRouting();
-        app.UseAuthentication();
-
-        app.UseAuthorization();
-
-        app.MapControllers();
+        app.UseDefaultExceptionHandler()
+             .UseFastEndpoints(c =>
+             {
+                 c.Errors.UseProblemDetails();
+                 c.Versioning.Prefix = "v";
+                 c.Versioning.DefaultVersion = 1;
+                 c.Versioning.PrependToRoute = true;             
+             })
+             .UseSwaggerGen();
 
         return app;
 

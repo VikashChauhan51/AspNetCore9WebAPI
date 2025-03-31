@@ -1,6 +1,6 @@
-﻿namespace CourseLibrary.API.Configurations;
+﻿namespace CourseLibrary.Authentication.Configurations;
 
-public class AuthenticationConfiguration
+public sealed class AuthenticationConfiguration
 {
     public string SecretForKey { get; init; } = string.Empty;
     public string Issuer { get; init; } = string.Empty;
