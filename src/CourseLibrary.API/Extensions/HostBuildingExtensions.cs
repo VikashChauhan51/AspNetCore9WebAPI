@@ -1,6 +1,9 @@
-﻿using FastEndpoints;
+﻿using CourseLibrary.Logging.Loggers.Enrichments;
+using FastEndpoints;
 using FastEndpoints.Swagger;
+using Microsoft.Extensions.Caching.Hybrid;
 using Serilog;
+using Serilog.Core;
 
 namespace CourseLibrary.API.Extensions;
 
@@ -8,12 +11,24 @@ public static class HostBuildingExtensions
 {
     public static WebApplication ConfigureServices(this WebApplicationBuilder builder)
     {
-        Log.Logger = new LoggerConfiguration()
-      .WriteTo.Console()
-      .Enrich.FromLogContext()
-      .CreateLogger();
+        builder.Services.AddHttpContextAccessor();
+        builder.Services.AddOptions();
+        builder.Services.AddSingleton<ILogEventEnricher, HttpContextEnricher>();      
+        builder.Host.UseSerilog((context, services, config) =>
+        {
+            var enrichers = services.GetServices<ILogEventEnricher>().ToArray();
 
-        builder.Host.UseSerilog(Log.Logger);
+            config
+                .ReadFrom.Configuration(context.Configuration)
+                .Enrich.FromLogContext()
+                .Enrich.With(enrichers)
+                .Enrich.WithEnvironmentName()
+                .Enrich.WithThreadName()
+                .Enrich.WithThreadId()
+                .Enrich.WithProcessId()
+                .Enrich.WithProcessName()
+                .WriteTo.Console();
+        });
 
         builder.ConfigureOpenTelemetry();
         builder.Services.SwaggerDocument(o =>
@@ -27,6 +42,21 @@ public static class HostBuildingExtensions
             };
         });
 
+        builder.Services.AddFastEndpoints()
+            .AddSwaggerDocument();
+
+        builder.Services.AddAuthorization();
+        builder.Services.AddAuthentication();
+        builder.Services.AddHybridCache(options =>
+        {
+            options.MaximumPayloadBytes = 1024 * 1024;
+            options.MaximumKeyLength = 1024;
+            options.DefaultEntryOptions = new HybridCacheEntryOptions
+            {
+                Expiration = TimeSpan.FromMinutes(5),
+                LocalCacheExpiration = TimeSpan.FromMinutes(5)
+            };
+        });
 
         builder.Services
             .CongigureServices(builder.Configuration)
