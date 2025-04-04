@@ -1,4 +1,6 @@
 ﻿using CourseLibrary.Logging.Loggers.Enrichments;
+using CourseLibrary.Models.Dtos;
+using CourseLibrary.Models.Extensions;
 using FastEndpoints;
 using FastEndpoints.Swagger;
 using Microsoft.Extensions.Caching.Hybrid;
@@ -23,6 +25,8 @@ public static class HostBuildingExtensions
                 .Enrich.FromLogContext()
                 .Enrich.With(enrichers)
                 .Enrich.WithEnvironmentName()
+                .Enrich.WithMachineName()
+                .Enrich.WithProperty("ApplicationName", "CourseLibrary")
                 .Enrich.WithThreadName()
                 .Enrich.WithThreadId()
                 .Enrich.WithProcessId()
@@ -58,6 +62,7 @@ public static class HostBuildingExtensions
             };
         });
 
+        builder.Services.AddMapsterConfiguration(typeof(AuthorDto).Assembly);
         builder.Services
             .CongigureServices(builder.Configuration)
             .CongigureRepositories(builder.Configuration);
