@@ -1,4 +1,5 @@
-﻿using CourseLibrary.Models.Dtos;
+﻿using CourseLibrary.Copilot;
+using CourseLibrary.Models.Dtos;
 using CourseLibrary.Models.Extensions;
 using FastEndpoints;
 using FastEndpoints.Swagger;
@@ -31,6 +32,7 @@ public static class HostBuildingExtensions
         builder.Services
             .CongigureServices(builder.Configuration)
             .CongigureRepositories(builder.Configuration);
+        builder.Services.AddSingleton<IOpenAiPredictionService, OpenAiPredictionService>();
 
         return builder.Build();
     }

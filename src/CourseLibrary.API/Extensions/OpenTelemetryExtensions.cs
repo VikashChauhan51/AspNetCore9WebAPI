@@ -1,11 +1,9 @@
 ﻿using OpenTelemetry.Metrics;
 using OpenTelemetry.Trace;
-using OpenTelemetry;
 using CourseLibrary.Logging.Telemetry.Filters;
 using CourseLibrary.Logging.Telemetry.Extensions;
 using Microsoft.Extensions.Options;
 using CourseLibrary.Logging.Telemetry.Configurations;
-using Microsoft.Identity.Client;
 
 namespace CourseLibrary.API.Extensions;
 

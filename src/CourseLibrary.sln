@@ -23,6 +23,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CourseLibrary.Logging", "Co
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CourseLibrary.Resilience", "Core\CourseLibrary.Resilience\CourseLibrary.Resilience.csproj", "{2498EDE5-AB15-47D5-AE85-93CCD2136C1E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CourseLibrary.Copilot", "Core\CourseLibrary.Copilot\CourseLibrary.Copilot.csproj", "{5D3D96EC-1027-4ED2-83EE-9F87DAF1B333}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -61,6 +63,10 @@ Global
 		{2498EDE5-AB15-47D5-AE85-93CCD2136C1E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2498EDE5-AB15-47D5-AE85-93CCD2136C1E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2498EDE5-AB15-47D5-AE85-93CCD2136C1E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5D3D96EC-1027-4ED2-83EE-9F87DAF1B333}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D3D96EC-1027-4ED2-83EE-9F87DAF1B333}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D3D96EC-1027-4ED2-83EE-9F87DAF1B333}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D3D96EC-1027-4ED2-83EE-9F87DAF1B333}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -73,6 +79,7 @@ Global
 		{2501067B-E096-4C0F-A4F2-24B746F28095} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{185C78E1-3CC9-4FE0-8532-65A3528FF6F2} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{2498EDE5-AB15-47D5-AE85-93CCD2136C1E} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{5D3D96EC-1027-4ED2-83EE-9F87DAF1B333} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2AECFFAB-42A2-4A90-A173-7BFF16E1C52B}
