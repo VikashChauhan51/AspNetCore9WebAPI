@@ -1,4 +1,5 @@
-﻿using CourseLibrary.Copilot;
+﻿using CourseLibrary.API.Middlewares;
+using CourseLibrary.Copilot;
 using CourseLibrary.Models.Dtos;
 using CourseLibrary.Models.Extensions;
 using FastEndpoints;
@@ -13,7 +14,6 @@ public static class HostBuildingExtensions
         builder.Services.AddHttpContextAccessor();
         builder.Services.AddOptions();
         builder.ConfigureOpenTelemetry();
-        builder.ConfigureLogger();
         builder.ConfigureCache();
         builder.ConfigureAuthentication();
         builder.Services.SwaggerDocument(o =>
@@ -39,22 +39,27 @@ public static class HostBuildingExtensions
 
     public static WebApplication ConfigurePipelines(this WebApplication app)
     {
+        app.UseDefaultExceptionHandler();
+        app.UseMiddleware<LoggingScopeEnrichmentMiddleware>();
+        app.UseCors();
+        app.UseAuthentication();
+        app.UseAuthorization();
+        app.UseMiddleware<UserContextEnrichmentMiddleware>();
+
         if (app.Environment.IsDevelopment())
         {
         }
-
-        app.UseDefaultExceptionHandler()
-             .UseFastEndpoints(c =>
-             {
-                 c.Errors.UseProblemDetails();
-                 c.Versioning.Prefix = "v";
-                 c.Versioning.DefaultVersion = 1;
-                 c.Versioning.PrependToRoute = true;             
-             })
-             .UseSwaggerGen();
+        app.UseFastEndpoints(c =>
+        {
+            c.Errors.UseProblemDetails();
+            c.Versioning.Prefix = "v";
+            c.Versioning.DefaultVersion = 1;
+            c.Versioning.PrependToRoute = true;
+        });
+        app.UseSwaggerGen();
 
         return app;
-
-    
     }
+
 }
+

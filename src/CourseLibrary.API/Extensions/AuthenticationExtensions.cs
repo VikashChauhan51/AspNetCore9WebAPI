@@ -11,6 +11,7 @@ public static class AuthenticationExtensions
         builder.Configuration.GetSection("Authentication"));
         builder.Services.AddAuthorization();
         builder.Services.AddAuthentication();
+        builder.Services.AddCors();
         builder.Services.AddScoped<IJwtTokenService, JwtTokenService>();
     }
 }
