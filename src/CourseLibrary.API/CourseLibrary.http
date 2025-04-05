@@ -1,0 +1,9 @@
+### Login Request
+POST http://localhost:5251/v1/api/authentication/login
+Accept: application/json
+Content-Type: application/json
+
+{
+  "email": "string",
+  "password": "string"
+}
