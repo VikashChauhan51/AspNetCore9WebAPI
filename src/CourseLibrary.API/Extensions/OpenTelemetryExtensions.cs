@@ -4,8 +4,8 @@ using CourseLibrary.Logging.Telemetry.Filters;
 using CourseLibrary.Logging.Telemetry.Extensions;
 using Microsoft.Extensions.Options;
 using CourseLibrary.Logging.Telemetry.Configurations;
-using Microsoft.Identity.Client;
 using OpenTelemetry;
+using CourseLibrary.Logging.Telemetry.Enrichments;
 
 namespace CourseLibrary.API.Extensions;
 
@@ -49,11 +49,16 @@ public static class OpenTelemetryExtensions
             tracing.AddSqlClientInstrumentation();
             tracing.AddEntityFrameworkCoreInstrumentation();
             tracing.AddHttpClientInstrumentation();
+            //tracing.AddProcessor<HttpContextEnrichmentProcessor>();
         });
 
         if (OtlpEndpoint != null && OtlpEndpoint.Endpoint != null)
         {
             otel.UseOtlpExporter(OtlpEndpoint.Protocol, OtlpEndpoint.Endpoint);
+        }
+        else
+        {
+            otel.UseOtlpExporter();
         }
     }
 }
