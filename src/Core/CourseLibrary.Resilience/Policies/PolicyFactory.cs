@@ -6,6 +6,7 @@ using Polly.Extensions.Http;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Net.Http;
+using Microsoft.Data.SqlClient;
 
 public static class PolicyFactory
 {
@@ -62,6 +63,21 @@ public static class PolicyFactory
                 },
                 onReset: () => logger.LogInformation("Circuit closed. Requests flow resumed."),
                 onHalfOpen: () => logger.LogInformation("Circuit in half-open. Trial request will be sent."));
+    }
+    public static IAsyncPolicy CreateSqlRetryPolicy(PolyOptions options, ILogger logger)
+    {
+        return Policy
+            .Handle<SqlException>() // Transient SQL issues (e.g., deadlocks, connection drop)
+            .Or<TimeoutException>() // General timeout
+            .WaitAndRetryAsync(
+                retryCount: options.RetryCount,
+                sleepDurationProvider: attempt => TimeSpan.FromMilliseconds(options.DelayInMilliseconds),
+                onRetry: (exception, timeSpan, retryAttempt, context) =>
+                {
+                    logger.LogWarning(exception,
+                        "SQL Retry {RetryAttempt} after {Delay}ms due to {ExceptionType}",
+                        retryAttempt, timeSpan.TotalMilliseconds, exception.GetType().Name);
+                });
     }
 }
 

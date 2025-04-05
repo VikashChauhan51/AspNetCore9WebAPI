@@ -1,7 +1,13 @@
 ﻿using CourseLibrary.Domain.Abstraction.Repositories;
 using CourseLibrary.Persistence.DbContexts;
 using CourseLibrary.Persistence.Repositories;
+using CourseLibrary.Resilience.Configurations;
+using CourseLibrary.Resilience.Policies;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+using Polly;
+using System.Data;
 
 namespace CourseLibrary.API.Extensions;
 
@@ -30,6 +36,12 @@ public static class RepositoryExtension
                     );
                 });
         });
+
+        services.AddScoped<IDbConnection>(sp =>
+        new SqlConnection(Configuration.GetConnectionString("CourseLibraryDatabase")));
+
+        services.AddSingleton<IAsyncPolicy>(sp =>
+            PolicyFactory.CreateSqlRetryPolicy(sp.GetRequiredService<IOptions<PolyOptions>>().Value, sp.GetRequiredService<ILogger>()));
 
         return services;
     }
