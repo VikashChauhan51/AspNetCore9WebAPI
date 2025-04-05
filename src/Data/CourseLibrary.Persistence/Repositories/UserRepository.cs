@@ -13,7 +13,7 @@ public class UserRepository : IUserRepository
         _context = context ?? throw new ArgumentNullException(nameof(context));
     }
 
-    public async Task<User?> GetUserAsync(string email, string password)
+    public async Task<User?> GetUserAsync(string email, string password, CancellationToken cancellationToken = default)
     {
         if (string.IsNullOrEmpty(email))
         {
@@ -28,7 +28,7 @@ public class UserRepository : IUserRepository
         return await _context.Users.FirstOrDefaultAsync(u => u.Email == email && u.Password == password);
 
     }
-    public async Task<User?> GetUserAsync(Guid userId)
+    public async Task<User?> GetUserAsync(Guid userId, CancellationToken cancellationToken = default)
     {
         if (userId == Guid.Empty)
         {

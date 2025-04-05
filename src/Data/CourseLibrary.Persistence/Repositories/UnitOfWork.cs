@@ -14,41 +14,41 @@ public class UnitOfWork : IUnitOfWork
         _context = context ?? throw new ArgumentNullException(nameof(context));
     }
 
-    public async Task BeginTransactionAsync()
+    public async Task BeginTransactionAsync(CancellationToken cancellationToken = default)
     {
         if (_transaction != null)
         {
             throw new InvalidOperationException("Transaction already started.");
         }
-        _transaction = await _context.Database.BeginTransactionAsync();
+        _transaction = await _context.Database.BeginTransactionAsync(cancellationToken: cancellationToken);
     }
 
-    public async Task CommitAsync()
+    public async Task CommitAsync(CancellationToken cancellationToken = default)
     {
         if (_transaction == null)
         {
             throw new InvalidOperationException("No active transaction.");
         }
-        await _context.SaveChangesAsync();
-        await _transaction.CommitAsync();
+        await _context.SaveChangesAsync(cancellationToken: cancellationToken);
+        await _transaction.CommitAsync(cancellationToken: cancellationToken);
         await _transaction.DisposeAsync();
         _transaction = null;
     }
 
-    public async Task RollbackAsync()
+    public async Task RollbackAsync(CancellationToken cancellationToken = default)
     {
         if (_transaction == null)
         {
             throw new InvalidOperationException("No active transaction.");
         }
-        await _transaction.RollbackAsync();
+        await _transaction.RollbackAsync(cancellationToken: cancellationToken);
         await _transaction.DisposeAsync();
         _transaction = null;
     }
 
-    public async Task<int> SaveChangesAsync()
+    public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
-        return await _context.SaveChangesAsync();
+        return await _context.SaveChangesAsync(cancellationToken: cancellationToken);
     }
 
     public void Dispose()

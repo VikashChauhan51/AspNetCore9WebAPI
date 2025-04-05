@@ -35,7 +35,7 @@ public class CourseRepository : ICourseRepository
         _context.Courses.Remove(course);
     }
 
-    public async Task<Course?> GetCourseAsync( Guid courseId)
+    public async Task<Course?> GetCourseAsync( Guid courseId, CancellationToken cancellationToken = default)
     {
        
         if (courseId == Guid.Empty)
@@ -48,7 +48,7 @@ public class CourseRepository : ICourseRepository
 
     }
 
-    public async Task<Course?> GetCourseAsync(Guid authorId, Guid courseId)
+    public async Task<Course?> GetCourseAsync(Guid authorId, Guid courseId, CancellationToken cancellationToken = default)
     {
         if (authorId == Guid.Empty)
         {
@@ -63,7 +63,7 @@ public class CourseRepository : ICourseRepository
           .Where(c => c.Id == courseId && c.AuthorId == authorId).FirstOrDefaultAsync();
     }
 
-    public async Task<IEnumerable<Course>> GetCoursesAsync(Guid authorId)
+    public async Task<IEnumerable<Course>> GetCoursesAsync(Guid authorId, CancellationToken cancellationToken = default)
     {
         if (authorId == Guid.Empty)
         {
@@ -74,7 +74,7 @@ public class CourseRepository : ICourseRepository
                     .Where(c => c.AuthorId == authorId)
                     .OrderBy(c => c.Title).ToListAsync();
     }
-    public async Task<IEnumerable<Course>> GetCoursesAsync()
+    public async Task<IEnumerable<Course>> GetCoursesAsync(CancellationToken cancellationToken = default)
     {
         return await _context.Courses
                     .OrderBy(c => c.Title).ToListAsync();
