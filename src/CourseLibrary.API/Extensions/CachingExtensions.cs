@@ -1,7 +1,4 @@
-﻿using CourseLibrary.Logging.Loggers.Enrichments;
-using Serilog.Core;
-using Serilog;
-using Microsoft.Extensions.Caching.Hybrid;
+﻿using Microsoft.Extensions.Caching.Hybrid;
 using CourseLibrary.Caching;
 using Microsoft.Extensions.Options;
 

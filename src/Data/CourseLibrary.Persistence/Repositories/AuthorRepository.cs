@@ -3,15 +3,18 @@ using CourseLibrary.Domain.Entities;
 using CourseLibrary.Persistence.DbContexts;
 using Dapper;
 using Microsoft.EntityFrameworkCore;
+using Polly;
 
 namespace CourseLibrary.Persistence.Repositories;
 
-public class AuthorRepository : IAuthorRepository
+public sealed class AuthorRepository : IAuthorRepository
 {
-    protected readonly CourseLibraryContext _context;
-    public AuthorRepository(CourseLibraryContext context)  
+    private readonly CourseLibraryContext _context;
+    private readonly IAsyncPolicy _policy;
+    public AuthorRepository(CourseLibraryContext context, IAsyncPolicy policy)  
     {
         _context = context ?? throw new ArgumentNullException(nameof(context));
+        _policy = policy;
     }
 
     public void AddAuthor(Author author)
@@ -45,13 +48,16 @@ public class AuthorRepository : IAuthorRepository
             SELECT 1 FROM Authors WHERE Id = @authorId
         );
     ";
-        int? result = await _context.Database.GetDbConnection()
+
+        return await _policy.ExecuteAsync(async () =>
+        {
+            int? result = await _context.Database.GetDbConnection()
             .QueryFirstOrDefaultAsync<int?>(
             new CommandDefinition(sql,
             new { authorId },
             cancellationToken: cancellationToken));
-
-        return result.HasValue;
+            return result.HasValue;
+        });
     }
 
     public void DeleteAuthor(Author author)
@@ -76,8 +82,11 @@ public class AuthorRepository : IAuthorRepository
 
     public async Task<IEnumerable<Author>> GetAuthorsAsync(CancellationToken cancellationToken = default)
     {
-        const string sql = "Select * from Authors";
-        return await _context.Database.GetDbConnection().QueryAsync<Author>(new CommandDefinition(sql, cancellationToken: cancellationToken));
+        return await _policy.ExecuteAsync(async () =>
+        {
+            const string sql = "Select * from Authors";
+            return await _context.Database.GetDbConnection().QueryAsync<Author>(new CommandDefinition(sql, cancellationToken: cancellationToken));
+        });
     }
 
     public async Task<IEnumerable<Author>> GetAuthorsAsync(IEnumerable<Guid> authorIds, CancellationToken cancellationToken = default)

@@ -1,13 +1,7 @@
-﻿using CourseLibrary.Authentication;
-using CourseLibrary.Caching;
-using CourseLibrary.Logging.Loggers.Enrichments;
-using CourseLibrary.Models.Dtos;
+﻿using CourseLibrary.Models.Dtos;
 using CourseLibrary.Models.Extensions;
 using FastEndpoints;
 using FastEndpoints.Swagger;
-using Microsoft.Extensions.Caching.Hybrid;
-using Serilog;
-using Serilog.Core;
 
 namespace CourseLibrary.API.Extensions;
 
