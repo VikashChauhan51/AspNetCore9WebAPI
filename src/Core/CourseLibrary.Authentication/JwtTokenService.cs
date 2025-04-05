@@ -1,5 +1,6 @@
 ﻿using CourseLibrary.Authentication.Configurations;
 using CourseLibrary.Domain.Entities;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -10,9 +11,9 @@ namespace CourseLibrary.Authentication;
 public class JwtTokenService : IJwtTokenService
 {
     private readonly AuthenticationConfiguration _authenticationConfiguration;
-    public JwtTokenService(AuthenticationConfiguration authenticationConfiguration)
+    public JwtTokenService(IOptions<AuthenticationConfiguration> options)
     {
-        _authenticationConfiguration = authenticationConfiguration;
+        _authenticationConfiguration = options.Value;
     }
     public string? GetToken(User user)
     {

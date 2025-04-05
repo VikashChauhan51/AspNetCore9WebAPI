@@ -19,8 +19,18 @@ public static class RepositoryExtension
 
         services.AddDbContext<CourseLibraryContext>(options =>
         {
-            options.UseSqlServer(Configuration.GetConnectionString("CourseLibraryDatabase"));
-    });
+            options.UseSqlServer(
+                Configuration.GetConnectionString("CourseLibraryDatabase"),
+                sqlOptions =>
+                {
+                    sqlOptions.EnableRetryOnFailure(
+                        maxRetryCount: 5,
+                        maxRetryDelay: TimeSpan.FromSeconds(1),
+                        errorNumbersToAdd: null
+                    );
+                });
+        });
+
         return services;
     }
 }

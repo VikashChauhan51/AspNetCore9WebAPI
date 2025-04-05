@@ -4,6 +4,6 @@ namespace CourseLibrary.Logging.Telemetry.Configurations;
 
 public sealed class OtlpExporterOptions
 {
-    required public Uri Endpoint { get; set; }
-    required public OtlpExportProtocol Protocol { get; set; } = OtlpExportProtocol.Grpc;
+    required public Uri Endpoint { get; init; }
+    required public OtlpExportProtocol Protocol { get; init; } = OtlpExportProtocol.Grpc;
 }

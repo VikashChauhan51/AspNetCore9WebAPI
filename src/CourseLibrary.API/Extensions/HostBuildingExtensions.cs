@@ -1,4 +1,6 @@
-﻿using CourseLibrary.Logging.Loggers.Enrichments;
+﻿using CourseLibrary.Authentication;
+using CourseLibrary.Caching;
+using CourseLibrary.Logging.Loggers.Enrichments;
 using CourseLibrary.Models.Dtos;
 using CourseLibrary.Models.Extensions;
 using FastEndpoints;
@@ -15,26 +17,10 @@ public static class HostBuildingExtensions
     {
         builder.Services.AddHttpContextAccessor();
         builder.Services.AddOptions();
-        builder.Services.AddSingleton<ILogEventEnricher, HttpContextEnricher>();      
-        builder.Host.UseSerilog((context, services, config) =>
-        {
-            var enrichers = services.GetServices<ILogEventEnricher>().ToArray();
-
-            config
-                .ReadFrom.Configuration(context.Configuration)
-                .Enrich.FromLogContext()
-                .Enrich.With(enrichers)
-                .Enrich.WithEnvironmentName()
-                .Enrich.WithMachineName()
-                .Enrich.WithProperty("ApplicationName", "CourseLibrary")
-                .Enrich.WithThreadName()
-                .Enrich.WithThreadId()
-                .Enrich.WithProcessId()
-                .Enrich.WithProcessName()
-                .WriteTo.Console();
-        });
-
         builder.ConfigureOpenTelemetry();
+        builder.ConfigureLogger();
+        builder.ConfigureCache();
+        builder.ConfigureAuthentication();
         builder.Services.SwaggerDocument(o =>
         {
             o.MaxEndpointVersion = 1;
@@ -45,23 +31,8 @@ public static class HostBuildingExtensions
                 s.Version = "v1";
             };
         });
-
         builder.Services.AddFastEndpoints()
             .AddSwaggerDocument();
-
-        builder.Services.AddAuthorization();
-        builder.Services.AddAuthentication();
-        builder.Services.AddHybridCache(options =>
-        {
-            options.MaximumPayloadBytes = 1024 * 1024;
-            options.MaximumKeyLength = 1024;
-            options.DefaultEntryOptions = new HybridCacheEntryOptions
-            {
-                Expiration = TimeSpan.FromMinutes(5),
-                LocalCacheExpiration = TimeSpan.FromMinutes(5)
-            };
-        });
-
         builder.Services.AddMapsterConfiguration(typeof(AuthorDto).Assembly);
         builder.Services
             .CongigureServices(builder.Configuration)

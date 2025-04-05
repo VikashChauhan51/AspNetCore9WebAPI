@@ -170,6 +170,24 @@ public static class PollyExtensions
             Timeout = client.Timeout
         };
     }
+
+    public static IHttpClientBuilder ConfigureHttpClientRetryPolicy(this IHttpClientBuilder builder)
+    {
+        return builder
+             .AddPolicyHandler((sp, _) =>
+             {
+                 var logger = sp.GetRequiredService<ILogger>();
+                 var options = sp.GetRequiredService<IOptions<PolyOptions>>().Value;
+                 return PolicyFactory.CreateRetryPolicy(options, logger);
+             })
+            .AddPolicyHandler((sp, _) =>
+            {
+                var logger = sp.GetRequiredService<ILogger>();
+                var options = sp.GetRequiredService<IOptions<PolyOptions>>().Value;
+                return PolicyFactory.CreateCircuitBreakerPolicy(options, logger);
+            });
+    }
+
 }
 
 
