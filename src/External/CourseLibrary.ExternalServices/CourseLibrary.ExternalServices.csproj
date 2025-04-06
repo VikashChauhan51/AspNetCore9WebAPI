@@ -6,14 +6,16 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+	<ItemGroup>
+		<PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.3.0" />
+	</ItemGroup>
+
   <ItemGroup>
-	<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.3" />
-    <PackageReference Include="OpenAI" Version="2.1.0" />
-	  
+    <Folder Include="Clients\" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CourseLibrary.Resilience\CourseLibrary.Resilience.csproj" />
+    <ProjectReference Include="..\..\Core\CourseLibrary.Resilience\CourseLibrary.Resilience.csproj" />
   </ItemGroup>
 
 </Project>

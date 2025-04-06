@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 
-namespace CourseLibrary.Resilience.Handlers;
+namespace CourseLibrary.ExternalServices.Handlers;
 
 public sealed class IdempotencyKeyHandler : DelegatingHandler
 {

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System.Diagnostics;
 
-namespace CourseLibrary.Resilience.Handlers;
+namespace CourseLibrary.ExternalServices.Handlers;
 
 public sealed class CorrelationIdHandler : DelegatingHandler
 {

@@ -18,14 +18,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Core\CourseLibrary.Authentication\CourseLibrary.Authentication.csproj" />
     <ProjectReference Include="..\Core\CourseLibrary.Caching\CourseLibrary.Caching.csproj" />
-    <ProjectReference Include="..\Core\CourseLibrary.Copilot\CourseLibrary.Copilot.csproj" />
     <ProjectReference Include="..\Core\CourseLibrary.Logging\CourseLibrary.Logging.csproj" />
     <ProjectReference Include="..\Core\CourseLibrary.Resilience\CourseLibrary.Resilience.csproj" />
     <ProjectReference Include="..\Data\CourseLibrary.Domain\CourseLibrary.Domain.csproj" />
     <ProjectReference Include="..\Data\CourseLibrary.Models\CourseLibrary.Models.csproj" />
     <ProjectReference Include="..\Data\CourseLibrary.Persistence\CourseLibrary.Persistence.csproj" />
+    <ProjectReference Include="..\External\CourseLibrary.Authentication\CourseLibrary.Authentication.csproj" />
+    <ProjectReference Include="..\External\CourseLibrary.Copilot\CourseLibrary.Copilot.csproj" />
+    <ProjectReference Include="..\External\CourseLibrary.ExternalServices\CourseLibrary.ExternalServices.csproj" />
   </ItemGroup>
 
 </Project>

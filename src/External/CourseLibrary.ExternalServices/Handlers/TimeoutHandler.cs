@@ -1,4 +1,4 @@
-﻿namespace CourseLibrary.Resilience.Handlers;
+﻿namespace CourseLibrary.ExternalServices.Handlers;
 
 public sealed class TimeoutHandler : DelegatingHandler
 {
