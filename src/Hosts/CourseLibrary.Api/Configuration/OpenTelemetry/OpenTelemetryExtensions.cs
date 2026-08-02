@@ -75,7 +75,7 @@ internal static class OpenTelemetryExtensions
              })
              .UseOtlpExporter();
 
-        builder.Services.AddSingleton<UserActivityProcessor>();
+        builder.Services.AddScoped<UserActivityProcessor>();
 
         return builder;
     }
