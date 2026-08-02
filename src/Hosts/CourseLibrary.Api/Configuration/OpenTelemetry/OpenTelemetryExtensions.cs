@@ -1,4 +1,6 @@
-﻿using CourseLibrary.Infrastructure.Observability.Telemetry;
+﻿using CourseLibrary.Infrastructure.Observability.Metrics;
+using CourseLibrary.Infrastructure.Observability.Telemetry;
+using CourseLibrary.Infrastructure.Observability.Tracing;
 using OpenTelemetry;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
@@ -35,6 +37,7 @@ internal static class OpenTelemetryExtensions
                      .AddSource(ActivitySources.Api.Name)
                      .AddSource(ActivitySources.Application.Name)
                      .AddSource(ActivitySources.Infrastructure.Name)
+
                      .AddAspNetCoreInstrumentation(options =>
                      {
                          options.RecordException = true;
@@ -56,13 +59,15 @@ internal static class OpenTelemetryExtensions
                      .AddMeter(Meters.Api.Name)
                      .AddMeter(Meters.Application.Name)
                      .AddMeter(Meters.Infrastructure.Name)
+                     .AddMeter(FrameworkMeters.AspNetCoreHosting)
+                     .AddMeter(FrameworkMeters.Kestrel)
+
                      .AddAspNetCoreInstrumentation()
                      .AddHttpClientInstrumentation()
                      .AddRuntimeInstrumentation()
                      .AddSqlClientInstrumentation()
-                     .AddProcessInstrumentation()
-                     .AddMeter(FrameworkMeters.AspNetCoreHosting)
-                     .AddMeter(FrameworkMeters.Kestrel);
+                     .AddProcessInstrumentation();
+                     
              })
              .UseOtlpExporter();
 
@@ -79,8 +84,8 @@ internal static class OpenTelemetryExtensions
             serviceVersion: ObservabilityConstants.ServiceVersion)
                 .AddAttributes(new Dictionary<string, object>
                 {
-                    ["deployment.environment"] = env.EnvironmentName,
-                    ["service.instance.id"] = Environment.MachineName
+                    [Attributes.DeploymentEnvironment] = env.EnvironmentName,
+                    [Attributes.ServiceInstanceId] = Environment.MachineName
                 });
     }
 }

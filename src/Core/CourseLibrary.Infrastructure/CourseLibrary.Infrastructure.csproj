@@ -13,11 +13,9 @@
 
   <ItemGroup>
     <Folder Include="Observability\Logging\" />
-    <Folder Include="Observability\Metrics\" />
     <Folder Include="Observability\Enrichers\" />
     <Folder Include="Observability\Processors\" />
     <Folder Include="Observability\Telemetry\" />
-    <Folder Include="Observability\Tracing\" />
   </ItemGroup>
 
 </Project>
