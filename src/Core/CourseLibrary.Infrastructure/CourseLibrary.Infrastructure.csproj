@@ -11,11 +11,4 @@
     <PackageReference Include="OpenTelemetry.Api" Version="1.17.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Observability\Logging\" />
-    <Folder Include="Observability\Enrichers\" />
-    <Folder Include="Observability\Processors\" />
-    <Folder Include="Observability\Telemetry\" />
-  </ItemGroup>
-
 </Project>
