@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="OpenTelemetry" Version="1.17.0" />
+    <PackageReference Include="OpenTelemetry.Api" Version="1.17.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Observability\Logging\" />
+    <Folder Include="Observability\Metrics\" />
+    <Folder Include="Observability\Enrichers\" />
+    <Folder Include="Observability\Processors\" />
+    <Folder Include="Observability\Telemetry\" />
+    <Folder Include="Observability\Tracing\" />
+  </ItemGroup>
+
+</Project>
