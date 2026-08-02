@@ -18,6 +18,7 @@ internal static class OpenTelemetryExtensions
         var resourceBuilder = ResourceBuilder.CreateDefault();
         ConfigureResource(resourceBuilder, builder.Environment);
 
+        builder.Services.AddSingleton<UserActivityProcessor>();
 
         builder.Logging.AddOpenTelemetry(options =>
         {
@@ -74,8 +75,6 @@ internal static class OpenTelemetryExtensions
 
              })
              .UseOtlpExporter();
-
-        builder.Services.AddScoped<UserActivityProcessor>();
 
         return builder;
     }

@@ -7,6 +7,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.AddLoggingObservability();
 builder.AddObservability();
+builder.Services.AddAuthentication();
+builder.Services.AddAuthorization();
+builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
 

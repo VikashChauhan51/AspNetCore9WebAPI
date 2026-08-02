@@ -12,6 +12,7 @@ internal static class LoggingExtensions
        this WebApplicationBuilder builder)
     {
         builder.Logging.EnableRedaction();
+        builder.Services.AddSingleton<CourseLibraryLogProcessor>();
         builder.Services.AddRedaction(options =>
         {
             // Passwords, tokens, secrets
@@ -39,8 +40,6 @@ internal static class LoggingExtensions
 
         });
 
-        builder.Services.AddSingleton<CourseLibraryLogProcessor>();
-        builder.Services.AddHttpContextAccessor();
 
         return builder;
     }
