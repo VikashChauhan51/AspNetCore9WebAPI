@@ -16,7 +16,7 @@
     <PackageReference Include="OpenTelemetry.Instrumentation.Process" Version="1.17.0-rc.1" />
     <PackageReference Include="OpenTelemetry.Instrumentation.Runtime" Version="1.17.0" />
     <PackageReference Include="OpenTelemetry.Instrumentation.SqlClient" Version="1.17.0" />
-    <PackageReference Include="Microsoft.Extensions.Telemetry" Version="10.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Telemetry" Version="10.8.0" />
   </ItemGroup>
 
   <ItemGroup>

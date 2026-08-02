@@ -6,5 +6,6 @@
   </Folder>
   <Folder Name="/Hosts/">
     <Project Path="Hosts/CourseLibrary.Api/CourseLibrary.Api.csproj" Id="69895d76-18ba-4cd1-885d-be0f92d63ce1" />
+    <Project Path="Hosts/CourseLibrary.AppHost/CourseLibrary.AppHost.csproj" Id="e51e8a6b-9540-4c58-b6f0-b00bee148f46" />
   </Folder>
 </Solution>
