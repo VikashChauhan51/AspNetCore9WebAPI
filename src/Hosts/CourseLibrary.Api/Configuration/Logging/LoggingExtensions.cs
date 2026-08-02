@@ -47,9 +47,11 @@ internal static class LoggingExtensions
 
     public static IApplicationBuilder UseRequestContext(this IApplicationBuilder app)
     {
-        app.UseMiddleware<RequestContextMiddleware>();
-        app.UseMiddleware<UserContextMiddleware>();
+        return app.UseMiddleware<RequestContextMiddleware>();
+    }
 
-        return app;
+    public static IApplicationBuilder UseUserContext(this IApplicationBuilder app)
+    {
+        return app.UseMiddleware<UserContextMiddleware>();
     }
 }

@@ -16,9 +16,10 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseRequestContext();
 app.UseAuthentication();
 app.UseAuthorization();
-app.UseRequestContext();
+app.UseUserContext();
 
 var summaries = new[]
 {
