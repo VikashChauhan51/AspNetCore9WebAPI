@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Compliance.Classification;
 
-namespace CourseLibrary.Infrastructure.Observability.Logging.Redactor;
+namespace CourseLibrary.Infrastructure.Observability.Logging.Redaction;
 
 public static class DataClassifications
 {

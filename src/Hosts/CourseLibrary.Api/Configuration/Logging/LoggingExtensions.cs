@@ -1,5 +1,6 @@
-﻿using CourseLibrary.Infrastructure.Observability.Logging.Redaction;
-using CourseLibrary.Infrastructure.Observability.Logging.Redactor;
+﻿using CourseLibrary.Infrastructure.Observability.Logging;
+using CourseLibrary.Infrastructure.Observability.Logging.Processors;
+using CourseLibrary.Infrastructure.Observability.Logging.Redaction;
 using Microsoft.Extensions.Compliance.Redaction;
 
 namespace CourseLibrary.Api.Configuration.Logging;
@@ -9,6 +10,7 @@ internal static class LoggingExtensions
     public static WebApplicationBuilder AddLoggingObservability(
        this WebApplicationBuilder builder)
     {
+        builder.Logging.EnableRedaction();
         builder.Services.AddRedaction(options =>
         {
             // Passwords, tokens, secrets
@@ -36,6 +38,7 @@ internal static class LoggingExtensions
 
         });
 
+        builder.Services.AddSingleton<RedactionLogProcessor>();
         return builder;
     }
 }

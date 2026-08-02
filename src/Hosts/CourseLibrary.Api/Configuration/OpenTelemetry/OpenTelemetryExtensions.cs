@@ -1,4 +1,5 @@
-﻿using CourseLibrary.Infrastructure.Observability.Metrics;
+﻿using CourseLibrary.Infrastructure.Observability.Logging.Processors;
+using CourseLibrary.Infrastructure.Observability.Metrics;
 using CourseLibrary.Infrastructure.Observability.Telemetry;
 using CourseLibrary.Infrastructure.Observability.Tracing;
 using OpenTelemetry;
@@ -23,6 +24,7 @@ internal static class OpenTelemetryExtensions
             options.IncludeScopes = true;
             options.IncludeFormattedMessage = true;
             options.ParseStateValues = true;
+            options.AddProcessor(sp => sp.GetRequiredService<RedactionLogProcessor>());
         });
 
         builder.Services.AddOpenTelemetry()
