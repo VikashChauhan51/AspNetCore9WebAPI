@@ -1,6 +1,7 @@
 ﻿using CourseLibrary.Infrastructure.Observability.Logging;
 using CourseLibrary.Infrastructure.Observability.Logging.Processors;
 using CourseLibrary.Infrastructure.Observability.Logging.Redaction;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Compliance.Redaction;
 
 namespace CourseLibrary.Api.Configuration.Logging;
@@ -39,6 +40,13 @@ internal static class LoggingExtensions
         });
 
         builder.Services.AddSingleton<CourseLibraryLogProcessor>();
+        builder.Services.AddHttpContextAccessor();
+
         return builder;
+    }
+
+    public static IApplicationBuilder UseRequestContext(this IApplicationBuilder app)
+    {
+        return app.UseMiddleware<RequestContextMiddleware>();
     }
 }
