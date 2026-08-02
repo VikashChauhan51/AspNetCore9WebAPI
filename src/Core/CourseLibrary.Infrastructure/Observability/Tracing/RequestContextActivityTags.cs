@@ -60,6 +60,16 @@ public static class RequestContextActivityTags
         activity.SetTag("http.response.status_code", httpContext.Response.StatusCode);
     }
 
+    public static void ApplyUserId(Activity? activity, string? userId)
+    {
+        if (activity is null || string.IsNullOrWhiteSpace(userId))
+        {
+            return;
+        }
+
+        activity.SetTag("user.id", userId);
+    }
+
     private static string ResolveCorrelationId(HttpContext context)
     {
         if (context.Request.Headers.TryGetValue("X-Correlation-ID", out var correlationId)

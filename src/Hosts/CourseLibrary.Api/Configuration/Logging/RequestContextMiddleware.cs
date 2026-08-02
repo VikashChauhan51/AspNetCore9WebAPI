@@ -31,14 +31,6 @@ internal sealed class RequestContextMiddleware(
             ["trace.id"] = Activity.Current?.TraceId.ToString()
         };
 
-        var userId = context.User.FindFirst("sub")?.Value
-            ?? context.User.FindFirst("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier")?.Value;
-
-        if (!string.IsNullOrWhiteSpace(userId))
-        {
-            scopeValues["user.id"] = userId;
-        }
-
         using var scope = logger.BeginScope(scopeValues);
 
         var activity = Activity.Current;
