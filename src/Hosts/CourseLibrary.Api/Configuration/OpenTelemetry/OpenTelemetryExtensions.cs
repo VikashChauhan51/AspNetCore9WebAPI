@@ -2,6 +2,7 @@
 using CourseLibrary.Infrastructure.Observability.Metrics;
 using CourseLibrary.Infrastructure.Observability.Telemetry;
 using CourseLibrary.Infrastructure.Observability.Tracing;
+using CourseLibrary.Infrastructure.Observability.Tracing.Processors;
 using OpenTelemetry;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
@@ -24,7 +25,7 @@ internal static class OpenTelemetryExtensions
             options.IncludeScopes = true;
             options.IncludeFormattedMessage = true;
             options.ParseStateValues = true;
-            options.AddProcessor(sp => sp.GetRequiredService<RedactionLogProcessor>());
+            options.AddProcessor(sp => sp.GetRequiredService<CourseLibraryLogProcessor>());
         });
 
         builder.Services.AddOpenTelemetry()
@@ -52,7 +53,8 @@ internal static class OpenTelemetryExtensions
                      {
                          options.RecordException = true;
                      })
-                     .AddEntityFrameworkCoreInstrumentation();
+                     .AddEntityFrameworkCoreInstrumentation()
+                     .AddProcessor<UserActivityProcessor>();
              })
              .WithMetrics(metrics =>
              {
@@ -69,9 +71,11 @@ internal static class OpenTelemetryExtensions
                      .AddRuntimeInstrumentation()
                      .AddSqlClientInstrumentation()
                      .AddProcessInstrumentation();
-                     
+
              })
              .UseOtlpExporter();
+
+        builder.Services.AddSingleton<UserActivityProcessor>();
 
         return builder;
     }

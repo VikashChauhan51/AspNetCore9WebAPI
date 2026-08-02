@@ -38,7 +38,7 @@ internal static class LoggingExtensions
 
         });
 
-        builder.Services.AddSingleton<RedactionLogProcessor>();
+        builder.Services.AddSingleton<CourseLibraryLogProcessor>();
         return builder;
     }
 }

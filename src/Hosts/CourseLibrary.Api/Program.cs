@@ -27,9 +27,7 @@ app.MapGet("/test-log", (ILogger<Program> logger) =>
 {
     var email = "vikash.chauhan@gmail.com";
 
-    logger.LogInformation(
-        "User email: {Email}",
-        Sensitive.Email(email));
+    logger.UserLoggedIn(email);
 
     return Results.Ok("Log written.");
 });
@@ -55,3 +53,18 @@ internal record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary
 {
     public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
 }
+
+
+public static partial class UserLogs
+{
+    [LoggerMessage(
+        EventId = 1,
+        Level = LogLevel.Information,
+        Message = "User email: {Email}")]
+    public static partial void UserLoggedIn(
+        this ILogger logger,
+
+        [Email]
+        string email);
+}
+
