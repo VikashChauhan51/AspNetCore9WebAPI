@@ -2,10 +2,20 @@
 using CourseLibrary.Api.Configuration.OpenTelemetry.Metrics;
 using CourseLibrary.Api.Configuration.OpenTelemetry.Tracing;
 using CourseLibrary.Api.Configuration.OpenTelemetry.Tracing.Processors;
+using CourseLibrary.Application.Observability.Metrics;
+using CourseLibrary.Application.Observability.Tracing;
+using CourseLibrary.Infrastructure.Observability.Metrics;
+using CourseLibrary.Infrastructure.Observability.Tracing;
 using OpenTelemetry;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
+using ApiActivitySources = CourseLibrary.Api.Configuration.OpenTelemetry.Tracing.ActivitySources;
+using ApplicationActivitySources = CourseLibrary.Application.Observability.Tracing.ActivitySources;
+using InfrastructureActivitySources = CourseLibrary.Infrastructure.Observability.Tracing.ActivitySources;
+using ApiMeters = CourseLibrary.Api.Configuration.OpenTelemetry.Metrics.Meters;
+using ApplicationMeters = CourseLibrary.Application.Observability.Metrics.Meters;
+using InfrastructureMeters = CourseLibrary.Infrastructure.Observability.Metrics.Meters;
 
 namespace CourseLibrary.Api.Configuration.OpenTelemetry;
 
@@ -36,10 +46,10 @@ internal static class OpenTelemetryExtensions
              .WithTracing(tracing =>
              {
                  tracing
-                     .AddSource(ActivitySources.Default.Name)
-                     .AddSource(ActivitySources.Api.Name)
-                     .AddSource(ActivitySources.Application.Name)
-                     .AddSource(ActivitySources.Infrastructure.Name)
+                     .AddSource(ApiActivitySources.Default.Name)
+                     .AddSource(ApiActivitySources.Api.Name)
+                     .AddSource(ApplicationActivitySources.Application.Name)
+                     .AddSource(InfrastructureActivitySources.Infrastructure.Name)
 
                      .AddAspNetCoreInstrumentation(options =>
                      {
@@ -59,10 +69,10 @@ internal static class OpenTelemetryExtensions
              .WithMetrics(metrics =>
              {
                  metrics
-                     .AddMeter(Meters.Default.Name)
-                     .AddMeter(Meters.Api.Name)
-                     .AddMeter(Meters.Application.Name)
-                     .AddMeter(Meters.Infrastructure.Name)
+                     .AddMeter(ApiMeters.Default.Name)
+                     .AddMeter(ApiMeters.Api.Name)
+                     .AddMeter(ApplicationMeters.Application.Name)
+                     .AddMeter(InfrastructureMeters.Infrastructure.Name)
                      .AddMeter(FrameworkMeters.AspNetCoreHosting)
                      .AddMeter(FrameworkMeters.Kestrel)
 
