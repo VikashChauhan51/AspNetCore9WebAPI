@@ -13,4 +13,9 @@
     <PackageReference Include="OpenTelemetry.Api" Version="1.17.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CourseLibrary.Application\CourseLibrary.Application.csproj" />
+    <ProjectReference Include="..\CourseLibrary.Domain\CourseLibrary.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -1,5 +1,5 @@
 using System.Diagnostics;
-using CourseLibrary.Infrastructure.Observability.Tracing;
+using CourseLibrary.Api.Configuration.OpenTelemetry.Tracing;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Primitives;
 

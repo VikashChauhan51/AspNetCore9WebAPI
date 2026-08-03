@@ -1,7 +1,7 @@
 ﻿using OpenTelemetry;
 using OpenTelemetry.Logs;
 
-namespace CourseLibrary.Infrastructure.Observability.Logging.Processors;
+namespace CourseLibrary.Api.Configuration.Logging.Processors;
 
 public sealed class CourseLibraryLogProcessor(
     string propertyPrefix = "courselibrary")
@@ -42,37 +42,6 @@ public sealed class CourseLibraryLogProcessor(
             return key;
         }
 
-        return $"{propertyPrefix}.{ToDotCase(key)}";
-    }
-
-    private static string ToDotCase(string value)
-    {
-        if (string.IsNullOrWhiteSpace(value))
-        {
-            return value;
-        }
-
-        var builder = new System.Text.StringBuilder(value.Length + 8);
-
-        for (var i = 0; i < value.Length; i++)
-        {
-            var c = value[i];
-
-            if (char.IsUpper(c))
-            {
-                if (i > 0)
-                {
-                    builder.Append('.');
-                }
-
-                builder.Append(char.ToLowerInvariant(c));
-            }
-            else
-            {
-                builder.Append(c);
-            }
-        }
-
-        return builder.ToString();
+        return $"{propertyPrefix}.{key}";
     }
 }

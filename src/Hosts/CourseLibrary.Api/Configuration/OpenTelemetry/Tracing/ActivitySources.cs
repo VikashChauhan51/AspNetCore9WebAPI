@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 
-namespace CourseLibrary.Infrastructure.Observability.Tracing;
+namespace CourseLibrary.Api.Configuration.OpenTelemetry.Tracing;
 
 public static class ActivitySources
 {

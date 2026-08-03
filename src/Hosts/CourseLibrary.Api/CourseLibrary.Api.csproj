@@ -20,6 +20,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Core\CourseLibrary.Application\CourseLibrary.Application.csproj" />
+    <ProjectReference Include="..\..\Core\CourseLibrary.Domain\CourseLibrary.Domain.csproj" />
     <ProjectReference Include="..\..\Core\CourseLibrary.Infrastructure\CourseLibrary.Infrastructure.csproj" />
   </ItemGroup>
 </Project>

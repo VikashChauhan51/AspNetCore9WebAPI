@@ -1,5 +1,5 @@
-﻿using CourseLibrary.Infrastructure.Observability.Logging;
-using CourseLibrary.Infrastructure.Observability.Logging.Processors;
+﻿using CourseLibrary.Api.Configuration.Logging.Processors;
+using CourseLibrary.Infrastructure.Observability.Logging;
 using CourseLibrary.Infrastructure.Observability.Logging.Redaction;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Compliance.Redaction;

@@ -1,8 +1,7 @@
-﻿using CourseLibrary.Infrastructure.Observability.Logging.Processors;
-using CourseLibrary.Infrastructure.Observability.Metrics;
-using CourseLibrary.Infrastructure.Observability.Telemetry;
-using CourseLibrary.Infrastructure.Observability.Tracing;
-using CourseLibrary.Infrastructure.Observability.Tracing.Processors;
+﻿using CourseLibrary.Api.Configuration.Logging.Processors;
+using CourseLibrary.Api.Configuration.OpenTelemetry.Metrics;
+using CourseLibrary.Api.Configuration.OpenTelemetry.Tracing;
+using CourseLibrary.Api.Configuration.OpenTelemetry.Tracing.Processors;
 using OpenTelemetry;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;

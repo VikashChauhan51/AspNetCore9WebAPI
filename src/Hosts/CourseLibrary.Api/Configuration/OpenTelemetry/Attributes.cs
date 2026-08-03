@@ -1,4 +1,4 @@
-﻿namespace CourseLibrary.Infrastructure.Observability.Telemetry;
+﻿namespace CourseLibrary.Api.Configuration.OpenTelemetry;
 
 public static class Attributes
 {
