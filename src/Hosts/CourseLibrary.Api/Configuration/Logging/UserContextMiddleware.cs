@@ -1,7 +1,5 @@
 using System.Diagnostics;
 using CourseLibrary.Api.Configuration.Telemetry.Tracing;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Primitives;
 
 namespace CourseLibrary.Api.Configuration.Logging;
 
@@ -12,6 +10,8 @@ internal sealed class UserContextMiddleware(
     public async Task InvokeAsync(HttpContext context)
     {
         var userId = ResolveUserId(context);
+        var activity = Activity.Current ??
+            ActivitySources.Api.StartActivity("user.context");
 
         if (!string.IsNullOrWhiteSpace(userId))
         {
@@ -19,8 +19,7 @@ internal sealed class UserContextMiddleware(
             {
                 ["user.id"] = userId
             });
-
-            var activity = Activity.Current ?? ActivitySources.Api.StartActivity("user.context");
+       
             RequestContextActivityTags.Apply(activity, context, route: context.Request.Path.Value);
             RequestContextActivityTags.ApplyUserId(activity, userId);
         }

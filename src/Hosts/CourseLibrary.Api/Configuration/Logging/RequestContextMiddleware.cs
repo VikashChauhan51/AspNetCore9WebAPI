@@ -1,6 +1,5 @@
 using System.Diagnostics;
 using CourseLibrary.Api.Configuration.Telemetry.Tracing;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Primitives;
 
 namespace CourseLibrary.Api.Configuration.Logging;
@@ -16,6 +15,9 @@ internal sealed class RequestContextMiddleware(
         var safePath = GetSafeRequestPath(context.Request);
         var route = safePath;
 
+        var activity = Activity.Current ??
+            ActivitySources.Api.StartActivity("request.context");
+
         var scopeValues = new Dictionary<string, object?>
         {
             ["request.id"] = requestId,
@@ -28,12 +30,10 @@ internal sealed class RequestContextMiddleware(
             ["request.user_agent"] = context.Request.Headers["User-Agent"].ToString(),
             ["request.remote_ip"] = context.Connection.RemoteIpAddress?.ToString(),
             ["request.content_type"] = context.Request.ContentType,
-            ["trace.id"] = Activity.Current?.TraceId.ToString()
+            ["trace.id"] = activity?.TraceId.ToString()
         };
 
         using var scope = logger.BeginScope(scopeValues);
-
-        var activity = Activity.Current;
         RequestContextActivityTags.Apply(activity, context, correlationId, requestId, route);
 
         if (!context.Response.Headers.ContainsKey("X-Correlation-ID"))
