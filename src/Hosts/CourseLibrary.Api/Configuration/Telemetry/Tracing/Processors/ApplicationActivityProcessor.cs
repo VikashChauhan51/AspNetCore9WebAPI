@@ -11,9 +11,5 @@ public sealed class ApplicationActivityProcessor(
     {
         activity.SetTag("application.name", hostEnvironment.ApplicationName);
         activity.SetTag("application.environment", hostEnvironment.EnvironmentName);
-
-        var assembly = typeof(ApplicationActivityProcessor).Assembly.GetName();
-
-        activity.SetTag("application.version", assembly.Version?.ToString());
     }
 }

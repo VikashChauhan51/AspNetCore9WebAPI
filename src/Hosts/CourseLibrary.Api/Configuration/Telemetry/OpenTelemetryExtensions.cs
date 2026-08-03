@@ -23,6 +23,10 @@ internal static class OpenTelemetryExtensions
         ConfigureResource(resourceBuilder, builder.Environment);
 
         builder.Services.AddSingleton<UserActivityProcessor>();
+        builder.Services.AddSingleton<ExceptionActivityProcessor>();
+        builder.Services.AddSingleton<CorrelationActivityProcessor>();
+        builder.Services.AddSingleton<EnvironmentActivityProcessor>();
+        builder.Services.AddSingleton<ApplicationActivityProcessor>();
 
         builder.Logging.AddOpenTelemetry(options =>
         {
@@ -59,7 +63,11 @@ internal static class OpenTelemetryExtensions
                          options.RecordException = true;
                      })
                      .AddEntityFrameworkCoreInstrumentation()
-                     .AddProcessor<UserActivityProcessor>();
+                     .AddProcessor<UserActivityProcessor>()
+                     .AddProcessor<ExceptionActivityProcessor>()
+                     .AddProcessor<CorrelationActivityProcessor>()
+                     .AddProcessor<EnvironmentActivityProcessor>()
+                     .AddProcessor<ApplicationActivityProcessor>();
              })
              .WithMetrics(metrics =>
              {
