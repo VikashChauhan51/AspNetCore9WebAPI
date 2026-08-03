@@ -1,5 +1,5 @@
 using CourseLibrary.Api.Configuration.Logging;
-using CourseLibrary.Api.Configuration.OpenTelemetry;
+using CourseLibrary.Api.Configuration.Telemetry;
 using CourseLibrary.Infrastructure.Observability.Logging.Redaction;
 using Microsoft.Extensions.Compliance.Classification;
 

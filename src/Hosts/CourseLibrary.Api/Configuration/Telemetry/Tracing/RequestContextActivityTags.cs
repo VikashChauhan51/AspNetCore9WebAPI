@@ -3,7 +3,7 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Primitives;
 
-namespace CourseLibrary.Api.Configuration.OpenTelemetry.Tracing;
+namespace CourseLibrary.Api.Configuration.Telemetry.Tracing;
 
 public static class RequestContextActivityTags
 {

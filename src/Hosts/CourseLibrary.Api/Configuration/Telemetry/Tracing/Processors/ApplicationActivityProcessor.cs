@@ -1,7 +1,7 @@
 ﻿using OpenTelemetry;
 using System.Diagnostics;
 
-namespace CourseLibrary.Api.Configuration.OpenTelemetry.Tracing.Processors;
+namespace CourseLibrary.Api.Configuration.Telemetry.Tracing.Processors;
 
 public sealed class ApplicationActivityProcessor(
     IHostEnvironment hostEnvironment)

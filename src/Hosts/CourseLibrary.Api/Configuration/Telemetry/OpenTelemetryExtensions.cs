@@ -1,23 +1,18 @@
 ﻿using CourseLibrary.Api.Configuration.Logging.Processors;
-using CourseLibrary.Api.Configuration.OpenTelemetry.Metrics;
-using CourseLibrary.Api.Configuration.OpenTelemetry.Tracing;
-using CourseLibrary.Api.Configuration.OpenTelemetry.Tracing.Processors;
-using CourseLibrary.Application.Observability.Metrics;
-using CourseLibrary.Application.Observability.Tracing;
-using CourseLibrary.Infrastructure.Observability.Metrics;
-using CourseLibrary.Infrastructure.Observability.Tracing;
+using CourseLibrary.Api.Configuration.Telemetry.Metrics;
+using CourseLibrary.Api.Configuration.Telemetry.Tracing.Processors;
 using OpenTelemetry;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
-using ApiActivitySources = CourseLibrary.Api.Configuration.OpenTelemetry.Tracing.ActivitySources;
+using ApiActivitySources = CourseLibrary.Api.Configuration.Telemetry.Tracing.ActivitySources;
 using ApplicationActivitySources = CourseLibrary.Application.Observability.Tracing.ActivitySources;
 using InfrastructureActivitySources = CourseLibrary.Infrastructure.Observability.Tracing.ActivitySources;
-using ApiMeters = CourseLibrary.Api.Configuration.OpenTelemetry.Metrics.Meters;
+using ApiMeters = CourseLibrary.Api.Configuration.Telemetry.Metrics.Meters;
 using ApplicationMeters = CourseLibrary.Application.Observability.Metrics.Meters;
 using InfrastructureMeters = CourseLibrary.Infrastructure.Observability.Metrics.Meters;
 
-namespace CourseLibrary.Api.Configuration.OpenTelemetry;
+namespace CourseLibrary.Api.Configuration.Telemetry;
 
 internal static class OpenTelemetryExtensions
 {

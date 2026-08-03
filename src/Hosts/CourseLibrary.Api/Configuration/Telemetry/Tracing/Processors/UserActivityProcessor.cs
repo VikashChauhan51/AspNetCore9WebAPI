@@ -1,9 +1,7 @@
-﻿using CourseLibrary.Api.Configuration.OpenTelemetry.Tracing;
-using Microsoft.AspNetCore.Http;
-using OpenTelemetry;
+﻿using OpenTelemetry;
 using System.Diagnostics;
 
-namespace CourseLibrary.Api.Configuration.OpenTelemetry.Tracing.Processors;
+namespace CourseLibrary.Api.Configuration.Telemetry.Tracing.Processors;
 
 public sealed class UserActivityProcessor(
     IHttpContextAccessor accessor)

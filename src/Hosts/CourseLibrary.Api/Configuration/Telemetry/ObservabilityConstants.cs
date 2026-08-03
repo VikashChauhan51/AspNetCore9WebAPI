@@ -1,4 +1,4 @@
-﻿namespace CourseLibrary.Api.Configuration.OpenTelemetry;
+﻿namespace CourseLibrary.Api.Configuration.Telemetry;
 
 internal static class ObservabilityConstants
 {

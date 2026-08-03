@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.Metrics;
 
-namespace CourseLibrary.Api.Configuration.OpenTelemetry.Metrics;
+namespace CourseLibrary.Api.Configuration.Telemetry.Metrics;
 
 public static class Meters
 {
