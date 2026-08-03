@@ -1,7 +1,8 @@
+using Carter;
 using CourseLibrary.Api.Configuration.Logging;
 using CourseLibrary.Api.Configuration.Telemetry;
+using CourseLibrary.Api.Endpoints;
 using CourseLibrary.Infrastructure.Observability.Logging.Redaction;
-using Microsoft.Extensions.Compliance.Classification;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +11,7 @@ builder.AddObservability();
 builder.Services.AddAuthentication();
 builder.Services.AddAuthorization();
 builder.Services.AddHttpContextAccessor();
+builder.Services.AddCarter();
 
 var app = builder.Build();
 
@@ -23,45 +25,9 @@ app.UseRequestContext();
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseUserContext();
-
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
-
-
-app.MapGet("/test-log", (ILogger<Program> logger) =>
-{
-    var email = "vikash.chauhan@gmail.com";
-
-    logger.UserLoggedIn(email);
-    logger.LogInformation("This is testing message with user {UserId}", 100);
-
-    return Results.Ok("Log written.");
-});
-
-app.MapGet("/weatherforecast", () =>
-{
-
-    var forecast = Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast");
+app.MapCarter();
 
 app.Run();
-
-internal record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
-
 
 public static partial class UserLogs
 {
